@@ -1,12 +1,13 @@
 import axiosInstance from "./axiosInstance";
 
-interface AuthResponse {
+export interface AuthResponse {
   message: string;
   data?: any;
   token?: string;
+  id?: string;
 }
 
-interface UpdateUserDetails {
+export interface UpdateUserDetails {
   email?: string;
   password?: string;
   recoveryEmail?: string;

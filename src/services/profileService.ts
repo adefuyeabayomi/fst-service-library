@@ -1,25 +1,31 @@
 import axiosInstance from './axiosInstance';
 
-interface ProfileResponse {
+export interface ProfileResponse {
   message: string;
   data?: any;
 }
 
-interface ProfileData {
-  firstName?: string;
-  lastName?: string;
-  gender?: string;
-  dateOfBirth?: string; // Consider using a Date type if applicable
-  bio?: string;
-  location?: string;
-  website?: string;
-  username?: string;
-  // Add other fields as needed
+
+export interface ProfileData {
+  user?: string;          // Reference to the Auth model
+  username: string;              // Randomly generated username if not provided
+  profileImage: string;          // Profile image URL (can be empty)
+  firstName: string;             // First name of the user (optional)
+  lastName: string;              // Last name of the user (optional)
+  gender: 'Male' | 'Female' | 'Other'; // Enum for gender with default as 'Other'
+  dateOfBirth: Date | null;      // Date of birth (can be null)
+  bio: string;                   // User bio (optional)
+  location: string;              // Location of the user (optional)
+  website: string;               // User's website URL (optional)
+  created: Date;                 // Date when the profile was created
+  deleted: boolean;              // Boolean indicating if the profile is deleted
+  socketId?: string;             // Optional socket ID for real-time communication
+  online: boolean;               // Boolean indicating if the user is online
 }
 
 const profileService = {
   // Create a new profile
-  createProfile: async (profileData: ProfileData, token: string): Promise<ProfileResponse> => {
+  createProfile: async (profileData: Partial<ProfileData>, token: string): Promise<ProfileResponse> => {
     try {
       const response = await axiosInstance.post<ProfileResponse>(
         '/profile',
@@ -37,9 +43,9 @@ const profileService = {
   },
 
   // Get a profile by user ID
-  getProfile: async (userId: string, token: string): Promise<ProfileResponse> => {
+  getProfile: async (userId: string, token: string): Promise<ProfileData> => {
     try {
-      const response = await axiosInstance.get<ProfileResponse>(
+      const response = await axiosInstance.get<ProfileData>(
         `/profile/${userId}`,
         {
           headers: {

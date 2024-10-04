@@ -1,8 +1,14 @@
 {
   "name": "fst-service-library",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.0.7",
   "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
